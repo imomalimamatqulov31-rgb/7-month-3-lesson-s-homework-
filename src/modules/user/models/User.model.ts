@@ -1,66 +1,49 @@
-import { HasMany, Model } from "sequelize-typescript"
-import { AllowNull, AutoIncrement, Column, DataType,  Table } from "sequelize-typescript";
-import { Category } from "src/modules/category/models/category.model";
+import { Column, DataType, Model, Table } from "sequelize-typescript";
 
-interface IUser{
-    firstname: string
-    lastname: string
-    age: number
-    email: string
-    gender: string
+
+interface IUser {
+   firstname: string;
+   lastname: string;
+   email: string;
+    password: string; 
 }
 
 @Table({
-    tableName: "users",
-    timestamps: true
+    tableName: 'users',
+    timestamps: true,
 })
-export class User extends Model<User, IUser> {
+
+export class User extends Model<User, IUser>{
     @Column({
         type: DataType.INTEGER,
         autoIncrement: true,
-        primaryKey: true
+        primaryKey: true,
     })
 
-    declare id: number
-
-    @Column({
-        type: DataType.STRING,
-        allowNull: false,
-
-    })
-    
-    declare firstname: string
+    declare id: number;
 
     @Column({
         type: DataType.STRING,
         allowNull: false,
     })
-
-    declare lastname: string
-
-
-    @Column({
-        type: DataType.SMALLINT,
-        allowNull: false,
-    })
-
-    declare age:number
-
-   @Column({
-    type: DataType.STRING,
-    allowNull: false,
-})
-declare email: string
-
+    declare firstname: string;
 
     @Column({
         type: DataType.STRING,
-        values: ["male", "female"],
-        allowNull: false
+        allowNull: false,
     })
+    declare lastname: string;
 
-    declare gender: string
+    @Column({
+        type: DataType.STRING,
+        allowNull: false,
+        unique: true,
+    })
+    declare email: string;
 
-    @HasMany(() => Category)
-        categories: Category[]
+    @Column({
+        type: DataType.STRING,
+        allowNull: false,
+    })
+    declare password: string;
 }
